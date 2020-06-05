@@ -5,8 +5,8 @@ def greedy(capacity: int, weights: list, values: list):
     items = [(v_w_ratios[i], weights[i], values[i], i) for i in range(len(weights))]
     # Sortowanie: najważniejszy stosunek, później waga, by elementy lżejsze o takim samym stosunku były
     # wpierw wybierane
-    items.sort(key=lambda x: x[1])
-    items.sort(key=lambda x: x[0], reverse=True)
+    items.sort(key=lambda x: x[1]) # po wadze
+    items.sort(key=lambda x: x[0], reverse=True) # po stosuku, malejąco
     added_items = []
     weight_left = capacity
 
