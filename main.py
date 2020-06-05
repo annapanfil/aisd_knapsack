@@ -1,4 +1,5 @@
 from dynamic import *
+from Greedy import *
 import numpy as np
 import time
 
@@ -22,7 +23,7 @@ def mainConstC():
     maxw = 100
     maxv = 100
     for n in range(10, 1000, 10):
-        # time_gre = 0
+        time_gre = 0
         time_dyn = 0
         error = 0
         for p in range(probes):
@@ -31,14 +32,14 @@ def mainConstC():
 
             time, result_dyn = measure_time(mainDynamic, capacity, weights, values)
             time_dyn += time
-            # time, result_gre += measure_time()
-            # time_gre += time
+            time, result_gre = measure_time(greedy,capacity,weights,values)
+            time_gre += time
 
-            # error += (result_dyn-result_gre)/result_dyn
+            error += (result_dyn[0]-result_gre[0])/result_dyn[0]
             print(n)
         export_data_to_file(filename+"_time_dyn", time_dyn/probes)
-        # export_data_to_file(filename+"_time_gre", time_gre/probes)
-        # export_data_to_file(filename+"_error", error/probes)
+        export_data_to_file(filename+"_time_gre", time_gre/probes)
+        export_data_to_file(filename+"_error", error/probes)
     return 0
 
 def mainConstN():
@@ -47,9 +48,9 @@ def mainConstN():
     n = 100
     maxw = 100
     maxv = 100
-    for capacity in range(8000, 100000, 1000):
+    for capacity in range(800, 2500, 100):
         time_dyn = 0
-        # time_gre = 0
+        time_gre = 0
         error = 0
         for p in range(probes):
             weights = np.random.randint(maxw, size=n)
@@ -57,15 +58,15 @@ def mainConstN():
 
             time, result_dyn = measure_time(mainDynamic, capacity, weights, values)
             time_dyn += time
-            # time, result_gre += measure_time()
-            # time_gre += time
+            time, result_gre = measure_time(greedy,capacity,weights,values)
+            time_gre += time
 
-            # error += (result_dyn-result_gre)/result_dyn
-            print(n)
+            error += (result_dyn[0]-result_gre[0])/result_dyn[0]
+            print(capacity)
         export_data_to_file(filename+"_time_dyn", time_dyn/probes)
         export_data_to_file(filename+"_time_gre", time_gre/probes)
         export_data_to_file(filename+"_error", error/probes)
     return 0
 
 if __name__ == '__main__':
-    mainConstC()
+    mainConstN()
